@@ -1,0 +1,17 @@
+{%- if template.suffix == 'ajax_mega_menu' -%}
+    {% section 'header-navigation-plain' %}
+{%- endif -%}
+
+{%- if settings.mobile_menu != 'default' -%}
+	{% section 'halo-navigation-mobile' %}
+	{% section 'halo-navigation-mobile-2' %}
+	{% section 'halo-navigation-mobile-3' %}
+{%- endif -%}
+
+{% unless settings.enable_currencies %}
+    <script src='//cdn.shopify.com/s/javascripts/currencies.js' defer="defer"></script>
+    <script src="{{ 'jquery.currencies.min.js' | asset_url }}" defer="defer"></script>
+    <script type="text/javascript">
+        let shopCurrency="{{ shop.currency }}"
+    </script>
+{% endunless %}
