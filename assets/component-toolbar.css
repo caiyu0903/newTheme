@@ -20,8 +20,8 @@
     justify-content: space-between;
     position: relative;
     margin: 0;
-    padding: 30px 0;
-    border-top: 1px solid #dedede;
+    padding:0 0 30px 0;
+    /*border-top: 1px solid #dedede;*/
 }
 
 .toolbar-wrapper {

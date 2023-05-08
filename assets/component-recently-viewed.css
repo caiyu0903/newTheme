@@ -1,6 +1,6 @@
 .halo-recently-viewed-popup{
     overflow: initial;
-    top: 50%;
+    top: 80%;
     left: auto;
     right: 0;
     transform: translate3d(20px,-50%,0);
@@ -551,7 +551,7 @@
 
 @media (min-width: 551px){
     .halo-recently-viewed-popup{
-        right: 0px;
+        right: 30px;
     }
 }
 

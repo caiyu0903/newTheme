@@ -3,12 +3,12 @@
 
 <link rel="stylesheet" href="{{ 'component-contact-form.css' | asset_url }}" media="print" onload="this.media='all'">
 <noscript>{{ 'component-contact-form.css' | asset_url | stylesheet_tag }}</noscript>
-
+{% comment %}
 {%- if settings.banner_animation == 'effect_1' -%}
     <link rel="stylesheet" href="{{ 'component-contact-form-banner-animation.css' | asset_url }}" media="print" onload="this.media='all'">
     <noscript>{{ 'component-contact-form-banner-animation.css' | asset_url | stylesheet_tag }}</noscript>
 {%- endif -%}
-
+{% endcomment %}
 {%- liquid
     assign padding_top = section.settings.mg_top_desktop | append: 'px'
     assign padding_bottom = section.settings.mg_bottom_desktop | append: 'px'

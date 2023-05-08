@@ -4704,38 +4704,38 @@ summary::-webkit-details-marker {
 @media (max-width: 551px){
     /* START: Container */
         .container{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .container-1770{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .container-1570{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .container-1470{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .container-1370{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .container-1320 {
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .container-1170{
-            padding-left: 10px;
-            padding-right: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
         }
 
         .halo-row{
@@ -6058,12 +6058,29 @@ summary::-webkit-details-marker {
         }
     /* END: Block */
 }
+@media (max-width: 767px) {
+    .footer__content-top{
+        padding-bottom: 0!important;
+    }
+    .footer-block__item.footer-block__newsletter{
+        margin-bottom: 0!important;
+    }
+    .list-payment__item .icon{
+        height: 24px!important;
+    }
+    .halo-recently-viewed-popup{
+        top: auto!important;
+        bottom: 0;
+        right: 20px!important;
+    }
+}
 
 @media (prefers-reduced-motion){
     .motion-reduce {
         transition: none !important;
     }
 }
+
 .shopify-policy__container{
   max-width: 800px;
 }

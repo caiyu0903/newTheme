@@ -1310,7 +1310,640 @@
         index: index
     %}
 {%- endif -%}
+{% comment %}
+<!-- 新增功能 -->
 
+<style>
+    .scroll-down .new-fixed{
+        position: fixed!important;
+        top: 0;
+        z-index: 2;
+        background-color: #ECECEE;
+    }
+    .scroll-up .new-fixed{
+        position: fixed!important;
+        top: 62px;
+        z-index: 2;
+        background-color: #ECECEE;
+    }
+    .learnmore{
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        padding-top: 0.875rem;
+        font-weight: 400;
+        font-size: 16px;
+        color: #225066;
+        background: none;
+        border: none;
+        padding-left:0 ;
+    }
+    .productView-desc{
+        position: relative;
+        overflow: hidden;
+        transition: all .3s ease;
+    }
+    .productview-des{
+        border-bottom: 1px solid #e5e5e5;
+        margin-bottom: 17px;
+    }
+    .productView-desc.active:after{
+        position: absolute;
+        height: 60%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg,hsla(0,0%,100%,0),hsla(0,0%,100%,.75) 54%,#fff);
+        clear: both;
+        content: " ";
+        display: block;
+        font-size: 0;
+        transition: all .3s ease;
+    }
+    .learnmore.active svg{
+        transform: rotate(180deg);
+    }
+    .new-product-tab{
+        background-color:#ececee;
+    }
+    .new-tab-heading{
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        margin: 0 -5px;
+        height: 52px;
+        background: #ECECEE;
+        border-radius: 39px;
+
+    }
+    .new-tab-heading div{
+        width: 50%;
+        padding: 8px 0;
+        text-align: center;
+        display: block;
+        /* border-bottom:1px solid #7D7978; */
+        /* margin: 0 5px; */
+    }
+    .new-tab-heading div a,.new-tab-heading div span{
+        min-height: 32px;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border-radius: 0;
+        border: 1px solid transparent;
+        margin: 0 auto;
+        font-size: 20px;
+        line-height: 26px;
+        font-weight: 400;
+        color: #555;
+        cursor: pointer;
+        font-family: 'Oswald';
+    }
+    .new-tab-heading div:hover{
+        /*border-bottom:3px solid #292624;*/
+        /*background-color: #EDEDED;*/
+    }
+    .new-tab-heading div.active{
+        /* border-bottom:3px solid #292624; */
+        /*         background: #1D95FD; */
+        border-radius: 58px;
+        height: 100%;
+        /*background-color: #EDEDED;*/
+    }
+    .new-tab-heading div:hover a{
+        color: #292624;
+    }
+    .new-tab-heading div.active a{
+        color: #292624;
+        font-weight: 600;
+    }
+    .new-tab-heading div:hover span{
+        color: #292624;
+    }
+    .new-tab-heading div.active span{
+        color:  #222;
+        font-weight: 700;
+    }
+    .productView-tab .tabs{
+        display: none!important;
+    }
+    .new-product-tab{
+        width: 100%;
+    }
+    #shopify-section-template--15903213158582__4efc71a1-47c7-4856-b2d5-b32361b07d83,
+    #shopify-section-template--15903213158582__49e51d1d-6910-4599-9416-2da5a31abc70,
+    #shopify-section-template--15903213158582__d048c75c-916e-4e38-b120-d93ed62538e1{
+        padding-top:107px;
+    }
+
+    .product-bottom-title{
+        /*background-color: #f8f8f8;*/
+        padding: 15px 0;
+        font-weight: 600;
+        font-size: 22px;
+        border-bottom: 1px solid #ccc;
+        margin-top: 50px;
+        font-family: 'Oswald';
+    }
+    .product-bottom-tabframe{
+        margin-top: 0px;
+    }
+    .product-bottom-specs table{
+        border-collapse: collapse;
+        border-spacing: 0;
+        table-layout: auto;
+        margin: 0;
+        margin-top: 53px;
+        border:1px solid #DDDDDD;
+    }
+    .product-bottom-specs table tr {
+        border-bottom: 1px solid #e3e3e3;
+    }
+    .product-bottom-specs table tr:nth-child(2n){
+        background-color: #F6F6F6;
+    }
+    .product-bottom-specs table tr td{
+        padding: 14px 13px;
+    }
+    .loox-reviews-default{
+        width: 100%;
+        max-width: 100%!important;
+    }
+    .product-bottom-specs table tr td:nth-of-type(1){
+        font-weight: 600;
+        width: 20%;
+        font-size: 16px;
+    }
+    .new-bottom-faq-question{
+        padding: 20px 0 20px 16px;
+        border-top: 1px solid #dddddd;
+        border-bottom: 1px solid #dddddd;
+        cursor: pointer;
+        position: relative;
+        font-weight: 600;
+    }
+    .new-bottom-faq-question:nth-of-type(1){
+        border-bottom: none;
+    }
+    .new-bottom-faq-question.active:nth-last-of-type(1){
+        border-bottom: none;
+    }
+    .new-bottom-faq-question.active{
+        border-bottom: none;
+    }
+    .new-bottom-faq-question:before{
+        content: "";
+        position: absolute;
+        top: calc(50% - 0.5px);
+        z-index: 2;
+        transform: translateY(-50%) rotate(0);
+        transition: var(--anchor-transition);
+        left: 5px;
+        width: 2px;
+        height: 12px;
+        background-color: #291414;
+    }
+    .new-bottom-faq-question:after{
+        left: 0;
+        width: 12px;
+        height: 2px;
+        background-color: #291414;
+        content: "";
+        position: absolute;
+        top: calc(50% - 0.5px);
+        z-index: 2;
+        transform: translateY(-50%) rotate(0);
+        transition: var(--anchor-transition);
+    }
+    .new-bottom-faq-question.active:before{
+        transform: translateY(-50%) rotate(90deg);
+    }
+    .new-bottom-faq-question.active:after{
+        transform: translateY(-50%) rotate(180deg);
+
+    }
+    .new-bottom-far-answer{
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: all .3s ease;
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-left: 16px;
+    }
+    .new-bottom-far-answer.active{
+        height: auto;
+        opacity: 1;
+        visibility: visible;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .new-bottom-far-answer.active:nth-last-of-type(1){
+        border-bottom: 1px solid #dddddd;
+    }
+    .metafield-file_reference{
+        width: 100%;
+        padding-bottom: 20px;
+    }
+    .new-product-bottom-text{
+        margin-bottom: 10px;
+    }
+    @media (min-width: 767px){
+        .product-bottom-faqs{
+            margin-top: 40px;
+        }
+        .new-information-box{
+            width: 25%;
+        }
+        .product-bottom-image{
+            padding-top: 20px;
+        }
+    }
+
+    @media (max-width: 767px){
+        .new-tab-heading div a,.new-tab-heading div span{
+            font-size: 13px;
+            padding: 0 8px;
+        }
+        .product-bottom-specs table{
+            margin-top: 15px;
+        }
+        .new-tab-heading{
+            margin-left: -39px;
+        }
+        #shopify-section-template--15903213158582__4efc71a1-47c7-4856-b2d5-b32361b07d83,
+        #shopify-section-template--15903213158582__49e51d1d-6910-4599-9416-2da5a31abc70,
+        #shopify-section-template--15903213158582__d048c75c-916e-4e38-b120-d93ed62538e1{
+            padding-top:88px;
+        }
+        .new-information-box{
+            max-width: 50%;
+        }
+        .new-bottom-mobile{
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+            opacity: 0;
+            transition: all .4s ease;
+            overflow-x:auto;
+        }
+        .new-bottom-mobile.active{
+            height: auto;
+            overflow: hidden;
+            visibility: visible;
+            opacity: 1;
+            transition: all .4s ease;
+            margin-top: 20px;
+            overflow-x:auto;
+        }
+        .product-bottom-title{
+            margin-top: 0px;
+            position: relative;
+            font-size: 17px;
+        }
+        .product-bottom-tabframe {
+            margin-top: 10px;
+        }
+        .product-bottom-title:after{
+            content: ' ';
+            display: inline-block;
+            border-top: 2px solid #232323;
+            border-right: 2px solid #232323;
+            width: 10px;
+            height: 10px;
+            transform: rotate(-225deg);
+            position: absolute;
+            right: 14px;
+            top: 20px;
+            transition: all .3s ease;
+        }
+        .product-bottom-title.active:after{
+            transform: rotate(-405deg);
+        }
+        .new-bottom-far-answer.active{
+            padding-top: 0;
+        }
+    }
+</style>
+
+<div class="product-bottom-tabBox">
+    <div class="new-product-tab hide-mobile">
+        <div class="container-1170">
+            <div class="new-tab-heading">
+                {% comment %}<div class="active"><a id="new-product-image-tab" href="#new-product-image">Overview</a></div>{% endcomment %}
+                {% comment %}<div><a id="new-product-specs" href="#new-product-specs">Specs</a></div>{% endcomment %}
+                {% comment %}<div><a id="new-product-reviews-tab" href="#new-product-reviews">Reviews</a></div>{% endcomment %}
+                {% comment %}<div><a id="new-product-faqs-tab" href="#new-product-faqs">FAQ</a></div>{% endcomment %}
+                <div class="active"><span id="new-product-image-tab">Overview</span></div>
+                {% if product.metafields.custom.specs != black %}
+                    <div><span id="new-product-specs-tab">Specs</span></div>
+                {% endif %}
+                <div><span id="new-product-reviews-tab">Reviews</span></div>
+                {% if product.metafields.custom.faqs != black %}
+                    <div><span id="new-product-faqs-tab">FAQ</span></div>
+                {% endif %}
+                <!--                 <div><span id="new-product-ship-tab">Shipping policy</span></div> -->
+            </div>
+        </div>
+    </div>
+    <div class="container-1170">
+        <div class="product-bottom-tabframe"  id="new-product-image" style="display: none;">
+            <div class="product-bottom-title hide-pc active">Overview</div>
+            <div class="product-bottom-image new-bottom-mobile active">
+                {{ product.description }}
+                {% if product.metafields.custom.custom_text != blank %}
+                    <div class="new-product-bottom-text">
+                        {{ product.metafields.custom.custom_text }}
+                    </div>
+                
+                {% endif %}
+                {% if product.metafields.custom.image_p != blank %}
+                    {{ product.metafields.custom.image_p | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p2 != blank %}
+                    {{ product.metafields.custom.image_p2 | metafield_tag  }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p2 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p2.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p3 != blank %}
+                    {{ product.metafields.custom.image_p3 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p3 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p3.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p4 != blank %}
+                    {{ product.metafields.custom.image_p4 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p4 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p4.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p5 != blank %}
+                    {{ product.metafields.custom.image_p5 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p5 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p5.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p6 != blank %}
+                    {{ product.metafields.custom.image_p6 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p6 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p6.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p7 != blank %}
+                    {{ product.metafields.custom.image_p7 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p7 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p7.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p8 != blank %}
+                    {{ product.metafields.custom.image_p8 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p8 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p8.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p9 != blank %}
+                    {{ product.metafields.custom.image_p9 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p9 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p9.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+                {% if product.metafields.custom.image_p10 != blank %}
+                    {{ product.metafields.custom.image_p10 | metafield_tag }}
+                    {% comment %}<img class="lazyload new-bottom-img" src="{{ product.metafields.custom.image_p10 | img_url: 'master' }}" alt="{{ product.metafields.custom.image_p10.alt | escape }}" loading="lazy">{% endcomment %}
+                {% endif %}
+            </div>
+        </div>
+        
+        
+        {% if product.metafields.custom.specs != black %}
+            <div class="product-bottom-tabframe">
+                <div class="product-bottom-title" id="new-product-specs">Specs</div>
+                <div class="product-bottom-specs new-bottom-mobile" >
+                    {{ product.metafields.custom.specs }}
+                </div>
+            </div>
+        {% endif %}
+        <div class="product-bottom-tabframe">
+            <div class="product-bottom-title" id="new-product-reviews">Reviews</div>
+            {{product.metafields.custom.image_article_layout_1}}
+            {{product.metafields.custom.image_article_layout_2}}
+            {{product.metafields.custom.image_article_layout_3}}
+            {{product.metafields.custom.image_article_layout_4}}
+            <div class="product-bottom-review new-bottom-mobile" >
+                {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: false, product: product %}
+            </div>
+        </div>
+        {% if product.metafields.custom.faqs != black %}
+            <div class="product-bottom-tabframe">
+                <div class="product-bottom-title" id="new-product-faqs">FAQ</div>
+                <div class="product-bottom-faqs new-bottom-mobile" >
+                    {% if product.metafields.custom.faqs != blank %}
+                        {{ product.metafields.custom.faqs}}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        <!--         <div class="product-bottom-tabframe">
+            <div class="product-bottom-title active" id="new-product-ship">Shipping policy</div>
+            <div class="product-bottom-faqs new-bottom-mobile active" >
+                {{ section.settings.page.content }}
+            </div>
+        </div> -->
+    </div>
+</div>
+{% comment %} 新增定制功能 {% endcomment %}
+<script>
+    //  描述
+    var short_des = document.querySelector(".productView-desc");
+    var learnmore = document.querySelector(".learnmore");
+    var learnmorespan = document.querySelector(".learnmore span");
+    var bl = true;
+    learnmore.onclick = function(){
+        if (bl == true){
+            short_des.style.height = 'auto'
+            short_des.classList.remove("active")
+            learnmore.classList.add("active")
+            learnmorespan.innerHTML = 'Show Less'
+            bl = false
+        }else{
+            short_des.style.height = '38px'
+            short_des.classList.add("active")
+            learnmore.classList.remove("active")
+            learnmorespan.innerHTML = 'Show More'
+            bl = true
+        }
+    }
+    //  移动端展开收缩
+    var new_bottom_tab = document.querySelectorAll(".product-bottom-title")
+    var folding_box = document.querySelectorAll(".new-bottom-mobile");
+
+
+    for (var i = 0; i <new_bottom_tab.length; i++) {
+        // for(var a=0;a<listi.length;a++){
+        (function (j) {
+
+            new_bottom_tab[j].onclick= function () {
+
+                if(folding_box[j].classList.contains("active")){
+                    folding_box[j].classList.remove("active")
+                    new_bottom_tab[j].classList.remove("active")
+
+                }          else{
+                    folding_box[j].classList.add("active")
+                    new_bottom_tab[j].classList.add("active")
+                }
+
+
+            }
+        }) (i)
+    }
+    //  faq 展开收缩
+    var new_bottom_question = document.querySelectorAll(".new-bottom-faq-question")
+    var new_bottom_answer = document.querySelectorAll(".new-bottom-far-answer");
+
+    for (var i = 0; i <new_bottom_question.length; i++) {
+        // for(var a=0;a<listi.length;a++){
+        (function (j) {
+
+            new_bottom_question[j].onclick= function () {
+
+                if(new_bottom_answer[j].classList.contains("active")){
+                    new_bottom_answer[j].classList.remove("active")
+                    new_bottom_question[j].classList.remove("active")
+
+                }          else{
+                    new_bottom_answer[j].classList.add("active")
+                    new_bottom_question[j].classList.add("active")
+                }
+
+
+            }
+        }) (i)
+    }
+    // 粘性导航
+    var new_product_tab = document.querySelectorAll(".new-tab-heading div");
+    var new_product_bottom_tabframe = document.querySelectorAll(".product-bottom-tabframe")
+    // new_product_sticky_tab.forEach((e)=>{
+    //     e.addEventListener("click",function(a){
+    //         new_product_bottom_tabframe.forEach((i)=>{
+    //             i.scrollIntoView({
+    //                  behavior:"smooth",
+    //                block: "start"
+    //                block: "start"
+    //             })
+    //         })
+    //        a.preventDefault();
+    //     })
+    //  })
+    new_product_tab.forEach((e)=>{
+        e.onclick = function(){
+            new_product_tab.forEach((a)=>{
+                a.classList.remove("active")
+            })
+            e.classList.add("active")
+        }
+    })
+    //     e.addEventListener("click",function(a){
+    //         new_product_bottom_tabframe.forEach((i)=>{
+    //             i.scrollIntoView({
+    //                 behavior:"smooth",
+    //                 block: "start"
+    //             })
+    //         })
+    //         a.preventDefault();
+    //     })
+    // })
+    //点击滑动此处
+    //第一种
+    // var cover_height = document.querySelector('.header-wrapper').offsetHeight
+    var tab_height = document.querySelector(".new-product-tab").offsetHeight
+    var new_product_image_tab = document.getElementById("new-product-image-tab")
+    var new_product_specs_tab = document.getElementById("new-product-specs-tab")
+    var new_product_reviews_tab = document.getElementById("new-product-reviews-tab")
+    var new_product_faqs_tab = document.getElementById("new-product-faqs-tab")
+    var new_product_ship_tab = document.getElementById("new-product-ship-tab")
+    var new_product_image = document.getElementById("new-product-image")
+    var new_product_specs = document.getElementById("new-product-specs")
+    var new_product_ship = document.getElementById("new-product-ship")
+    var new_product_reviews = document.getElementById("new-product-reviews")
+    var new_product_faqs = document.getElementById("new-product-faqs")
+    let product_tabBox = document.querySelector(".product-bottom-tabBox")
+    if(new_product_image_tab){
+    new_product_image_tab.addEventListener("click",function(e){
+        // 点击 backtop，跳转到 d3 的位置
+        product_tabBox.scrollIntoView({
+            behavior:"smooth",
+            block: "start"
+        });
+        e.preventDefault();
+
+    });
+
+    }
+    {% if product.metafields.custom.specs != black %}
+    new_product_specs_tab.addEventListener("click",function(e){
+        // 点击 backtop，跳转到 d3 的位置
+        new_product_specs.scrollIntoView({
+            behavior:"smooth",
+            block: "start"
+        });
+
+        e.preventDefault();
+    });
+    {% endif %}
+    if(new_product_reviews_tab) {
+        new_product_reviews_tab.addEventListener("click", function (e) {
+            // 点击 backtop，跳转到 d3 的位置
+            //  new_product_reviews.scrollIntoView({
+            //      behavior:"smooth",
+            //      block: "start"
+            //   });
+            new_product_reviews.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            })
+            e.preventDefault();
+        });
+    }
+    {% if product.metafields.custom.faqs != black %}
+    new_product_faqs_tab.addEventListener("click",function(e){
+        // 点击 backtop，跳转到 d3 的位置
+        new_product_faqs.scrollIntoView({
+            behavior:"smooth",
+            block: "start"
+        });
+
+        e.preventDefault();
+    });
+    {% endif %}
+    if(new_product_ship_tab){
+    new_product_ship_tab.addEventListener("click",function(e){
+        // 点击 backtop，跳转到 d3 的位置
+        new_product_ship.scrollIntoView({
+            behavior:"smooth",
+            block: "start"
+        });
+
+        e.preventDefault();
+    });
+    }
+    // 第二种
+    // var new_product_sticky_tab = document.querySelectorAll(".new-tab-heading div span")
+    // var new_product_bottom_tabframe = document.querySelectorAll(".product-bottom-tabframe")
+    // new_product_sticky_tab.forEach((e)=>{
+    //     e.addEventListener("click",function(a){
+    //         new_product_bottom_tabframe.forEach((i)=>{
+    //             i.scrollIntoView({
+    //                 behavior:"smooth",
+    //                 block: "start"
+    //             })
+    //         })
+    //         a.preventDefault();
+    //     })
+    // })
+
+    // click1.addEventListener("click",function(e){
+    //     // 点击 backtop，跳转到 d3 的位置
+    //     banner1.scrollIntoView({
+    //         behavior:"smooth",
+    //         block: "start"
+    //     });
+    //
+    //     e.preventDefault();
+    // });
+</script>
+{%- comment -%} 粘性导航 {%- endcomment -%}
+<script src="{{ 'new-product-tab.js' | asset_url }}" defer="defer"></script>
+ {% endcomment %}
 <script src="{{ 'variants.js' | asset_url }}" defer="defer"></script>
 {%- if show_sticky_add_to_cart -%}
     <script src="{{ 'sticky-add-to-cart.js' | asset_url }}" defer="defer"></script>

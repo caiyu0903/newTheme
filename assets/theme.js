@@ -27,7 +27,18 @@
         ready: function (){
             this.loaderScript();
             this.loaderProductBlock();
-            
+          
+            // Init Mobile Menu
+            if (window.innerWidth < 1025) {
+                this.menuSidebarMobile();
+                this.menuSidebarMobileToggle();
+            }
+            // mobile search bar
+            this.headerSidebarSearch();
+
+            // mobile cart
+            this.initQuickCart();
+
             if (navigator.userAgent.match(/OS X.*Safari/) && ! navigator.userAgent.match(/Chrome/)) {
                 document.body.classList.add('safari')
             } else {
@@ -63,7 +74,6 @@
             this.initColorSwatch();
             this.initAddToCart();
             this.initQuickShop();
-            this.initQuickCart();
             this.initNotifyInStock();
             this.initCompareProduct();
             this.initWishlist();
@@ -72,7 +82,7 @@
             this.headerLanguageCurrency();
             this.headerMasonry();
             this.initLiveChat();
-            this.headerSidebarSearch();
+
             this.headerStickySearchForm();
             this.initCountdown();
             this.collectionCountdown();
@@ -87,11 +97,7 @@
                 this.initQuickView();
             }
 
-            // Init Mobile Menu 
-            if (window.innerWidth < 1025) {
-                this.menuSidebarMobile();
-                this.menuSidebarMobileToggle();
-            }
+
 
             // Check Lazyload Done
             const loadingImages = document.querySelectorAll('.media--loading-effect img')
